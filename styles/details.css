@@ -1,0 +1,15 @@
+/* 
+contains particular div stylings - especially flexbox positioning
+*/
+
+.bookings {
+    /* this is its own element outside of the flex parent below */
+}
+
+.lists {
+    /* parent flex element */
+}
+
+.lists--column {
+    /* modifies child elements (2) of .lists */
+}
