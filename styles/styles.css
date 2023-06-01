@@ -3,9 +3,8 @@ contains overarching typography
 imports particular div stylings from details.css
 */
 
-@import "details.css"
-@import
-/* import a font family from googleapis here! ^^^ */
+@import "details.css";
+@import url("https://fonts.googleapis.com/css?family=Bungee+Inline|Droid+Sans");
 
 /*Typography
 --------------------------------------------------------------*/
@@ -14,11 +13,11 @@ button,
 input,
 select,
 textarea {
-    color: #404040;
-    font-family: "Comfortaa", Arial, sans-serif;
-    /* !!!! modify this ^^^
+	color: #404040;
+	font-family: "Droid Sans", Arial, sans-serif;
 	font-size: 14px;
 	line-height: 1.5;
+	background-color: #404040;
 }
 
 h1,
@@ -27,6 +26,9 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: "Patua One", serif;
-	letter-spacing: 2px;
+	font-family: "Bungee Inline", serif;
+	letter-spacing: 6px;
+	text-align: center;
+	text-shadow: 0 0 5px darkmagenta;
+	color: white
 }

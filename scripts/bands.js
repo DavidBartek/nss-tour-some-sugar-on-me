@@ -53,7 +53,7 @@ document.addEventListener(
                 if (band.id === parseInt(bandPK)) {
                     const filteredBookings = filterBookings(band, bookings) // helper function 1
                     let filteredVenues = filterVenues(filteredBookings, venues) // helper function 2
-                    if (filteredVenues.length === 0) { // conditional statement accounting for a band not being booked
+                    if (filteredVenues.length === 0) { // conditional statement accounting for a band not being booked ()
                         window.alert(`${band.bandName} has been booked by no one :(`)
                     } else {
                         window.alert(`${band.bandName} has been booked by ${filteredVenues}`)
@@ -87,12 +87,3 @@ const filterVenues = (filteredBookings, allVenues) => {
     }
     return filteredVenues
 }
-
-
-
-document.addEventListener(
-    "click",
-    (clickEvent) => {
-
-    }
-)

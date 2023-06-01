@@ -10,7 +10,7 @@ const mainContainer = document.querySelector("#container") // accesses HTML docu
 
 const applicationHTML = `
 <article class="bookings">
-    <h2>Current Bookings</h2>
+    <h2 id="bookings--heading">Current Bookings</h2>
     ${Bookings()}
 </article>
 
@@ -19,7 +19,7 @@ const applicationHTML = `
         <h2>Venues</h2>
         ${Venues()}
     </section>
-    <section class="lists=column">
+    <section class="lists--column">
         <h2>Bands</h2>
         ${Bands()}
     </section>

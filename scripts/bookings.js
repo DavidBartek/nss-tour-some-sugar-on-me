@@ -5,7 +5,6 @@
 //      genre
 //      year formed ("formed in XXXX")
 //      num members ("X band members")
-//  likely that each of these will be called by independent functions
 
 import { getBookings } from "./database.js"
 import { getVenues } from "./database.js"
@@ -39,7 +38,7 @@ export const Bookings = () => {
     for (const booking of bookings) {
         const band = findBand(booking, bands)// helper function 1
         const venue = findVenue(booking, venues) // helper function 2
-        htmlString += `<li id="booking--${booking.id}">${band.bandName} is playing at ${venue.venueName} on ${booking.date}</li>`
+        htmlString += `<li id="booking--${booking.bookingId}">${band.bandName} is playing at ${venue.venueName} on ${booking.date}</li>`
     }
     htmlString += "</ul>"
     return htmlString
@@ -69,9 +68,44 @@ const findVenue = (booking, allVenues) => {
     return foundVenue
 }
 
+
+// create an event listener - when a booking is clicked, displays window alert:
+//      band name
+//      band genre
+//      band year formed ("formed in XXXX")
+//      band num members ("X band members")
+
+// event listener listens for:
+// "click"
+// and when the click's target is an element with id starting with "booking"
+
+// iterate through bookings
+// if booking.id (pk) === the clicked element's id: run the below code.
+
+// use findBand function, defined earlier, to:
+// iterate through bands
+// if booking.bandId (fk) === band.id (pk), return that band object
+
+// create a window alert and access the bands' respective properties in the order above
+
 document.addEventListener(
     "click",
     (clickEvent) => {
+        const clickedItem = clickEvent.target
+        if (clickedItem.id.startsWith("booking")) {
+            const [, bookingPK] = clickedItem.id.split("--")
 
+            for (const booking of bookings) {
+                if (booking.bookingId === parseInt(bookingPK)) {
+                    const foundBand = findBand(booking, bands) // helper function 1; already defined for the exported HTML function above!
+
+                    window.alert(`${foundBand.bandName}\n${foundBand.genre}\nFormed in ${foundBand.yearEstablished}\n${foundBand.numberOfMembers} band members`)
+                }
+            }
+        }
     }
 )
+
+// helper function 1: match band to the booking's band id
+// parameters: iterated booking; bands array
+// you already made this above!!

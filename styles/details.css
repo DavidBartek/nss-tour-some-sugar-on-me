@@ -4,12 +4,32 @@ contains particular div stylings - especially flexbox positioning
 
 .bookings {
     /* this is its own element outside of the flex parent below */
+    color: white;
+    max-width: fit-content;
+    padding: 1em;
+    margin: auto;
+    border: 3px solid black;
+    border-radius: 5%;
+    background-color: rgb(51, 51, 51);
+    box-shadow: 0 0 10px #FF0000;
 }
 
 .lists {
     /* parent flex element */
+    display: flex;
+    justify-content: center;
+    color: white
 }
 
 .lists--column {
     /* modifies child elements (2) of .lists */
+    flex-basis: 20%;
+    margin-top: 2em;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 1em;
+    border: 3px solid black;
+    border-radius: 5%;
+    background-color: rgb(51, 51, 51);
+    box-shadow: 0 0 10px #FF0000;
 }
