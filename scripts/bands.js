@@ -4,10 +4,12 @@
 import { getBookings } from "./database.js"
 import { getVenues } from "./database.js"
 import { getBands } from "./database.js"
+import { getBandMembers } from "./database.js"
 
+const bands = getBands()
 const bookings = getBookings()
 const venues = getVenues()
-const bands = getBands()
+const bandMembers = getBandMembers()
 
 // HTML string: exports an unordered list of each band's name
 // each list item should be formatted: <li id="band--${band.id}">${band.name}</li>
@@ -42,27 +44,32 @@ export const Bands = () => {
 // create an array of all venues in the filtered bookings array
 // create and return an array of the venues' names only
 
-document.addEventListener(
-    "click",
-    (clickEvent) => {
-        const clickedItem = clickEvent.target
-        if (clickedItem.id.startsWith("band")) {
-            const [, bandPK] = clickedItem.id.split("--")
+// ***
+// *** click event version 1: when band is clicked on, displays which venues they are booked
+// ***
 
-            for (const band of bands) {
-                if (band.id === parseInt(bandPK)) {
-                    const filteredBookings = filterBookings(band, bookings) // helper function 1
-                    let filteredVenues = filterVenues(filteredBookings, venues) // helper function 2
-                    if (filteredVenues.length === 0) { // conditional statement accounting for a band not being booked ()
-                        window.alert(`${band.bandName} has been booked by no one :(`)
-                    } else {
-                        window.alert(`${band.bandName} has been booked by ${filteredVenues}`)
-                    }
-                }
-            }
-        }
-    }
-)
+// document.addEventListener(
+//     "click",
+//     (clickEvent) => {
+//         const clickedItem = clickEvent.target
+//         if (clickedItem.id.startsWith("band")) {
+//             const [, bandPK] = clickedItem.id.split("--")
+
+//             for (const band of bands) {
+//                 if (band.id === parseInt(bandPK)) {
+//                     const filteredBookings = filterBookings(band, bookings) // helper function 1
+//                     const filteredVenues = filterVenues(filteredBookings, venues) // helper function 2
+//                     const filteredVenuesString = filteredVenues.join(", ") // joins array values into a formatted string
+//                     if (filteredVenues.length === 0) { // conditional statement accounting for a band not being booked ()
+//                         window.alert(`${band.bandName} has been booked by no one :(`)
+//                     } else {
+//                         window.alert(`${band.bandName} has been booked by ${filteredVenuesString}`)
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// )
 
 // helper function 1
 const filterBookings = (band, allBookings) => {
@@ -86,4 +93,53 @@ const filterVenues = (filteredBookings, allVenues) => {
         }
     }
     return filteredVenues
+}
+
+// ***
+// Click Event version 2 (for explorer chapter) - when band is clicked on, displays band members AND upcoming shows in the following format:
+// 
+// Gail McDermott (lead singer)
+// Chad Wilson (guitar)
+// Melanie Hobson (bass)
+// Greg Broadstreet (drummer)
+
+// Upcoming shows:
+// Cellar Moss
+// Flint Rock Cafe
+//
+
+document.addEventListener("click", e => {
+    if (e.target.id.startsWith("band--")) {
+        const [, bandId] = e.target.id.split("--")
+
+        for (const band of bands) {
+            if (band.id === parseInt(bandId)) {
+                const filteredBookings = filterBookings(band, bookings) // helper function 1
+                const filteredVenues = filterVenues(filteredBookings, venues) // helper function 2
+                const filteredVenuesString = filteredVenues.join("\n") // joins array values into a formatted string
+                const filteredMembersString = filterMembers(band)
+                if (filteredVenues.length === 0) { // conditional statement accounting for a band not being booked ()
+                    window.alert(`${filteredMembersString}\nUpcoming shows:\nnowhere :(`)
+                } else {
+                    window.alert(`${filteredMembersString}\nUpcoming shows:\n${filteredVenuesString}`)                
+                }
+            }
+        }
+    }
+})
+
+
+// helper function 3:
+// finds all band members with bandId which match the id in the band element
+// accesses name and role properties
+// formats into a string
+
+const filterMembers = (band) => {
+    let memberString = ""
+    for (const memberObj of bandMembers) {
+        if (band.id === memberObj.bandId) {
+            memberString += `${memberObj.firstName} ${memberObj.lastName} (${memberObj.role})\n`
+        }
+    }
+    return memberString
 }
